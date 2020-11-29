@@ -71,15 +71,11 @@ Number_of_contacts_forWork_MidRestriction = 2 * Social_Distancing
 Number_of_contacts_forOther_MidRestriction = 2 * Social_Distancing
 N0_of_passengers_in_Contact_in_Transit_afterRestriction = 10*.3/2
 
-# SocialDistancing_startday = 20
-#Adjustmentـfactor_for_Infection_rate_afterRestriction = {'M':0.5,'O':0.5,'P':0.5,'S':0.8,'G':0.8} 
 PropofTime = 1/5
 
 Duration_of_sickness_Infection_to_Recovery = 14 # Sickness period. After these number of days, the infected persons are automatically recovered.
 
 Number_of_days_for_simulation = 500
-
-#FirstInfectedPersonIndex = 1
 
 AllowedInfection_InterActivities = {
                                     'Work':['Work','Market','School'],
@@ -101,7 +97,6 @@ Daily_Infected = {}
 Cumulative_Infected = {1:0}
 
 Infected_list = pd.read_csv('Initial_Infected_Pop.csv',delimiter=',')
-#Infected_list = Infected_list[Infected_list.index == FirstInfectedPersonIndex]
 Infected_list['HH_P'] = Infected_list.household_id.map(str) + "_" + Infected_list.person_id.map(str)
 persons = pd.read_csv('C:/Users/z5057821/Desktop/Runs/persons.csv',delimiter=',')
 
@@ -116,7 +111,6 @@ persons['Coeff_Of_Infectious_prob_because_of_Mask_Main'] = np.where(persons['Mas
 np.random.seed(100)
 persons['Mask_used_at_Home?'] = np.random.randint(1, 100, persons.shape[0])
 persons['Mask_used_at_Home?'] = np.where(persons['Mask_used_at_Home?'] <= Proportion_of_people_using_Mask_who_use_Mask_at_Home*100,1,0)
-#persons['Mask_used_at_Home?'] = persons['Mask_used_at_Home?'] * persons['Mask_used?'] 
 
 persons['Coeff_Of_Infectious_prob_because_of_Mask_at_Home_Main'] = np.where(persons['Mask_used_at_Home?'] == 1,1-Reduction_in_transmission_DueTo_Mask_IH[1],1)
 
@@ -225,6 +219,7 @@ Quarantined_Family = pd.read_csv('Quarantined_Family.csv',delimiter=',')
 
 Number_of_days_for_simulation = 3000
 
+## Running the model over days
 # for day in range(MileStone_Day+1,Number_of_days_for_simulation+1):
 for day in range(1,Number_of_days_for_simulation+1):
     
@@ -580,9 +575,3 @@ for day in range(1,Number_of_days_for_simulation+1):
 # pd.DataFrame(Cumulative_Infected.items(),columns=['Day','Cumulative_Infected']).to_csv('{0}/R_Cumulative_Infected.csv'.format(MakingFolder),index = False)
 # pd.DataFrame(Y.items(),columns=['Group','Values']).to_csv('{0}/R_Y.csv'.format(MakingFolder),index = False)
 # pd.DataFrame(Count_Infections.items(),columns=['Act','Count']).to_csv('{0}/R_Count_Infections.csv'.format(MakingFolder),index = False)
-         
-
-
-
-
-    
